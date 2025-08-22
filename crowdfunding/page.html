@@ -184,6 +184,7 @@
     // === CONFIGURA AQUÍ TU CAMPAÑA (simple) ===
     const campaign = {
       paymentLink: "https://tu-link-de-cobro.com/p/abc123", // ⇦ Reemplaza por tu link
+      urlSite: "https://psmart-code.github.io/jjk-web/crowdfunding/page.html", 
       athleteName: "Jin Joo Kang Lee"
     };
 
@@ -207,14 +208,14 @@
 
     // Copiar/Compartir/WhatsApp
     document.getElementById('copyLinkBtn').addEventListener('click', async ()=>{
-      try{ await navigator.clipboard.writeText(campaign.paymentLink); alert('Link copiado ✅'); }
-      catch{ prompt('Copia el link manualmente:', campaign.paymentLink); }
+      try{ await navigator.clipboard.writeText(campaign.urlSite); alert('Link copiado ✅'); }
+      catch{ prompt('Copia el link manualmente:', campaign.urlSite); }
     });
 
     document.getElementById('shareBtn').addEventListener('click', async ()=>{
-      const shareData = { title: 'Apoya esta campaña', text: 'Súmate con un aporte', url: campaign.paymentLink };
+      const shareData = { title: 'Apoya esta campaña', text: 'Súmate con un aporte', url: campaign.urlSite };
       if (navigator.share){ try{ await navigator.share(shareData); } catch{} }
-      else { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(campaign.paymentLink)}`, '_blank'); }
+      else { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(campaign.urlSite)}`, '_blank'); }
     });
 
     document.getElementById('whatsAppBtn').addEventListener('click', ()=>{
