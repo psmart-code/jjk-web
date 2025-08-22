@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apoya a la maestra</title>
+  <meta name="description" content="Dona con un clic o escanea el QR para apoyar a la maestra." />
+  <style>
+    :root{--bg:#0f1226;--fg:#fff;--muted:#cbd5e1;--brand:#6ee7b7;--card:#171a35}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:linear-gradient(180deg,#0b0e20 0%, #12153a 60%, #0f1226 100%);color:var(--fg)}
+    .wrap{max-width:920px;margin:auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    .badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.15);border-radius:18px}
+    .pad{padding:18px}
+    .title{font-size:clamp(26px,3.2vw,40px);font-weight:800;line-height:1.1;margin:8px 0 6px}
+    .subtitle{color:var(--muted);margin:0 0 12px}
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .hero-media{border-radius:18px;overflow:hidden;min-height:260px}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:12px;padding:14px 18px;font-weight:700}
+    .btn-brand{background:linear-gradient(180deg,var(--brand),#34d399);color:#0b1220}
+    .btn-ghost{background:rgba(255,255,255,.08);color:var(--fg);border:1px solid rgba(255,255,255,.15)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .qrbox{display:grid;place-items:center;padding:18px}
+    .qrbox img{max-width:320px;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:#fff}
+    .section{margin:26px 0}
+    .list{display:grid;gap:10px}
+    .item{padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+    footer{color:var(--muted);padding:20px 0;border-top:1px solid rgba(255,255,255,.12);margin-top:26px}
+    @media (max-width: 880px){.hero{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#22c55e)"></div>
+        <div>
+          <div style="font-weight:800;letter-spacing:.3px">Apoyo Deportivo</div>
+          <div class="badge">Transparente • Seguro</div>
+        </div>
+      </div>
+      <!-- <div class="badge">Hecho con ❤️</div> -->
+    </header>
+
+    <section class="hero">
+      <div class="card pad">
+        <h1 class="title">Apoya a <span id="athleteName">Jin Joo Kang</span></h1>
+        <p class="subtitle">Nuestra maestra ha sido nominada al prestigioso <strong>2025 Greatest of All Time (GOAT) Award</strong>, otorgado por el Comité de Williams Elite Martial Arts Academy en Florida, EE.UU. Este reconocimiento internacional destaca su excepcional habilidad, dedicación e impacto en la comunidad de artes marciales.  
+          Esta nominación representa un honor único y la oportunidad de dejar huella en la historia de las artes marciales. Tu apoyo permitirá cubrir pasajes, hospedaje y alimentación para asistir a la ceremonia y al evento internacional.</p>
+        <div class="cta" role="group" aria-label="Acciones de donación">
+          <a id="donateBtn" class="btn btn-brand" href="#" target="_blank" rel="noopener">Donar ahora</a>
+          <button class="btn btn-ghost" id="copyLinkBtn">Copiar link</button>
+          <button class="btn btn-ghost" id="shareBtn">Compartir</button>
+          <button class="btn btn-ghost" id="whatsAppBtn">WhatsApp</button>
+        </div>
+      </div>
+      <div class="hero-media card">
+        <img src="./resources/master-img-1.jpg" alt="Maestra de artes marciales" />
+      </div>
+    </section>
+    <!-- <section class="section">
+      <div class="card pad">
+        <h2>Sobre la maestra</h2>
+        <p id="story">Nuestra atleta ha sido nominada al prestigioso <strong>2025 Greatest of All Time (GOAT) Award</strong>, otorgado por el Comité de Williams Elite Martial Arts Academy en Florida, EE.UU. Este reconocimiento internacional destaca su excepcional habilidad, dedicación e impacto en la comunidad de artes marciales.  
+        Esta nominación representa un honor único y la oportunidad de dejar huella en la historia de las artes marciales. Tu apoyo permitirá cubrir pasajes, inscripción, hospedaje y alimentación para asistir a la ceremonia y al evento internacional.</p>
+      </div>
+    </section> -->
+
+    <section class="section two">
+      <div class="card pad">
+        <h2>Cómo Apoyar</h2>
+        <div class="list">
+          <div class="item">Pulsa <strong>Apoyar ahora</strong> o escanea el QR con la app de tu banco en Bolivia.</div>
+          <div class="item">Elige el monto y confirma el pago.</div>
+        </div>
+        <p class="subtitle">Funciona con cualquier banco de Bolivia y el link de cobro Takenos</p>
+      </div>
+      <div class="card qrbox">
+        <div>
+          <div class="badge" style="margin-bottom:8px">Escanéame para apoyar</div>
+          <img id="qrImg" alt="Código QR de donación" src="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card pad">
+        <h2>Sobre la Maestra</h2>
+        <p id="story">[Cuenta brevemente la historia, logros y el propósito del viaje/competencia. Ej.: “Soy cinturón negro de (disciplina), clasificada para (evento) el (fecha) en (ciudad). ¡Gracias por tu apoyo!”]</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card pad">
+        <h2>Actualizaciones</h2>
+        <div class="list" id="updates">
+          <div class="item"><strong>22/08/2025</strong> Lanzamos la campaña. ¡Gracias por compartir!</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Campaña de apoyo deportivo.</div>
+    </footer>
+  </div>
+
+  <script>
+    // === CONFIGURA AQUÍ TU CAMPAÑA (simple) ===
+    const campaign = {
+      paymentLink: "https://tu-link-de-cobro.com/p/abc123", // ⇦ Reemplaza por tu link
+      athleteName: "Jin Joo Kang Lee"
+    };
+
+    const $ = s => document.querySelector(s);
+    $('#athleteName').textContent = campaign.athleteName;
+    $('#year').textContent = new Date().getFullYear();
+
+    // Botón principal
+    const setDonateHref = (href) => { $('#donateBtn').href = href; };
+    setDonateHref(campaign.paymentLink);
+
+    // QR dinámico (con fallback)
+    (function buildQR(){
+      const img = document.getElementById('qrImg');
+      const data = encodeURIComponent(campaign.paymentLink);
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${data}`;
+      img.addEventListener('error', ()=>{
+        img.src = `https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=${data}`;
+      }, {once:true});
+    })();
+
+    // Copiar/Compartir/WhatsApp
+    document.getElementById('copyLinkBtn').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(campaign.paymentLink); alert('Link copiado ✅'); }
+      catch{ prompt('Copia el link manualmente:', campaign.paymentLink); }
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async ()=>{
+      const shareData = { title: 'Apoya esta campaña', text: 'Súmate con un aporte', url: campaign.paymentLink };
+      if (navigator.share){ try{ await navigator.share(shareData); } catch{} }
+      else { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(campaign.paymentLink)}`, '_blank'); }
+    });
+
+    document.getElementById('whatsAppBtn').addEventListener('click', ()=>{
+      const m = `¡Hola! Apoya esta campaña deportiva 💪
+Dona aquí: ${campaign.paymentLink}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(m)}`, '_blank');
+    });
+  </script>
+</body>
+</html>
