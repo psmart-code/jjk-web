@@ -4,7 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Apoya a la maestra</title>
-  <meta name="description" content="Dona con un clic o escanea el QR para apoyar a la maestra." />
+  <!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:title" content="Apoya a la maestra Jin Joo Kang Lee" />
+<meta property="og:description" content="Apoya a nuestra maestra nominada al 2025 GOAT Award en Florida, EE.UU. Tu ayuda hará posible su viaje." />
+<meta property="og:image" content="https://psmart-code.github.io/jjk-web/crowdfunding/resources/master-jjk-img-1.jpg" />
+<meta property="og:url" content="https://psmart-code.github.io/jjk-web/crowdfunding/page.html" />
+<meta property="og:type" content="website" />
+  <meta name="description" content="Apoya con un clic o escanea el QR para apoyar a la maestra." />
   <style>
     :root{--bg:#0f1226;--fg:#fff;--muted:#cbd5e1;--brand:#6ee7b7;--card:#171a35}
     *{box-sizing:border-box}
@@ -31,13 +37,51 @@
     .item{padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
     footer{color:var(--muted);padding:20px 0;border-top:1px solid rgba(255,255,255,.12);margin-top:26px}
     @media (max-width: 880px){.hero{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+
+    /* Contenedor fijo */
+.slider {
+  width: 100%;
+  max-width: 600px;
+  height: 490px;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Slides en fila */
+.slides {
+  display: flex;
+  height: 100%;
+  animation: slideX 28s steps(13) infinite;
+  will-change: transform;
+}
+
+/* Cada slide ocupa exactamente el ancho del contenedor */
+.slide{ flex:0 0 100%; height:100%; }
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Mueve de 0% a -1300% (14 imágenes = 13 pasos de -100%) */
+@keyframes slideX{
+  to { transform: translateX(-1300%); }
+}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#22c55e)"></div>
+        <div style="
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Bolivia.svg') center/cover no-repeat;
+"></div>
         <div>
           <div style="font-weight:800;letter-spacing:.3px">Apoyo Deportivo</div>
           <div class="badge">Transparente • Seguro</div>
@@ -53,14 +97,34 @@
         <p class="subtitle">Nuestra maestra ha sido nominada al prestigioso <strong>2025 Greatest of All Time (GOAT) Award</strong>, otorgado por el Comité de Williams Elite Martial Arts Academy en Florida, EE.UU. Este reconocimiento internacional destaca su excepcional habilidad, dedicación e impacto en la comunidad de artes marciales.  
           Esta nominación representa un honor único y la oportunidad de dejar huella en la historia de las artes marciales. Tu apoyo permitirá cubrir pasajes, hospedaje y alimentación para asistir a la ceremonia y al evento internacional.</p>
         <div class="cta" role="group" aria-label="Acciones de donación">
-          <a id="donateBtn" class="btn btn-brand" href="#" target="_blank" rel="noopener">Donar ahora</a>
+          <a id="donateBtn" class="btn btn-brand" href="#" target="_blank" rel="noopener">Apoyar ahora</a>
           <button class="btn btn-ghost" id="copyLinkBtn">Copiar link</button>
           <button class="btn btn-ghost" id="shareBtn">Compartir</button>
           <button class="btn btn-ghost" id="whatsAppBtn">WhatsApp</button>
         </div>
       </div>
-      <div class="hero-media card">
+      <!-- <div class="hero-media card">
         <img src="./resources/master-jjk-img-1.jpg" alt="Maestra de artes marciales" />
+      </div> -->
+
+      <div class="hero-media card slider">
+        <div class="slides">
+          <div class="slide"><img src="./resources/master-jjk-img-1.jpg" alt="Maestra 1"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-2.jpg" alt="Maestra 2"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-3.jpg" alt="Maestra 3"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-4.jpg" alt="Maestra 4"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-5.jpg" alt="Maestra 5"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-6.jpg" alt="Maestra 6"></div>
+          <!-- <div class="slide"><img src="./resources/master-jjk-img-7.jpg" alt="Maestra 7"></div> -->
+          <div class="slide"><img src="./resources/master-jjk-img-8.jpg" alt="Maestra 8"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-9.jpg" alt="Maestra 9"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-10.jpg" alt="Maestra 10"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-11.jpg" alt="Maestra 11"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-12.jpg" alt="Maestra 12"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-13.jpg" alt="Maestra 13"></div>
+          <div class="slide"><img src="./resources/master-jjk-img-14.jpg" alt="Maestra 14"></div>
+
+        </div>
       </div>
     </section>
     <!-- <section class="section">
@@ -83,7 +147,7 @@
       <div class="card qrbox">
         <div>
           <div class="badge" style="margin-bottom:8px">Escanéame para apoyar</div>
-          <img id="qrImg" alt="Código QR de donación" src="" />
+          <img id="qrImg" alt="Código QR de donación" src="./resources/qr-page.jpg" />
         </div>
       </div>
     </section>
@@ -91,7 +155,14 @@
     <section class="section">
       <div class="card pad">
         <h2>Sobre la Maestra</h2>
-        <p id="story">[Cuenta brevemente la historia, logros y el propósito del viaje/competencia. Ej.: “Soy cinturón negro de (disciplina), clasificada para (evento) el (fecha) en (ciudad). ¡Gracias por tu apoyo!”]</p>
+    
+        <p>La Maestra Sabomnim Jin Joo Kang Lee, nacida en Bolivia en 1983, inició su camino en las artes marciales a los 3 años bajo la guía de su padre, el Gran Maestro Jin Won Kang, proveniente de Corea del Sur. Desde muy joven obtuvo sus primeros cinturones negros en Taekwondo y Kick Boxing, destacándose en campeonatos departamentales, nacionales e internacionales, logrando títulos panamericanos y mundiales.</p>
+    
+        <p>Con más de 35 años de trayectoria, ha alcanzado los más altos grados en Taekwondo y Kick Boxing, incluyendo el 8º Dan en Kick Boxing y el 7º Dan en Taekwondo, avalados por prestigiosas organizaciones internacionales como Kukkiwon (Corea), ISKA, CBKBT, WOMA, CMAMDC, entre otras.</p>
+    
+        <p>Ha sido reconocida con múltiples distinciones internacionales, entre ellas el título de Doctor Honoris Causa en Artes Marciales, el premio internacional ATHENA – Mujer Guerrera, y certificados de excelencia por su aporte al desarrollo y promoción de las artes marciales. Además, ocupa cargos honoríficos como Directora de ISKA en Bolivia, Presidenta de World Taekwondo Peace Federation Korea en Bolivia y miembro permanente del tribunal internacional de grados Shihankai.</p>
+    
+        <p>Actualmente dirige la Academia Kang’s, donde entrena y forma campeones departamentales, nacionales, sudamericanos, panamericanos e internacionales en Taekwondo y Kick Boxing, dejando un legado de disciplina, superación y pasión por las artes marciales.</p>
       </div>
     </section>
 
@@ -128,7 +199,7 @@
     (function buildQR(){
       const img = document.getElementById('qrImg');
       const data = encodeURIComponent(campaign.paymentLink);
-      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${data}`;
+      img.src = `./resources/qr-page.jpg`;
       img.addEventListener('error', ()=>{
         img.src = `https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=${data}`;
       }, {once:true});
