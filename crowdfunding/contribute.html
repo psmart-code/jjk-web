@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cobros con montos fijos — Takenos</title>
+  <meta name="description" content="montos sugeridos" />
+  <style>
+    :root{
+      --bg:#0f1226; --bg2:#12163a; --card:#161a32; --fg:#e6eaf2; --muted:#9aa4c2; --brand:#6ee7b7; --accent:#7dd3fc;
+      --ring: rgba(110,231,183,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, #1c2357 0%, transparent 60%),
+                  radial-gradient(1200px 600px at 10% 110%, #11203a 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--fg);
+    }
+    .wrap{max-width:960px;margin:auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent))}
+    .brand h1{font-size:18px;margin:0}
+    .hint{color:var(--muted);font-size:14px}
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px
+    }
+    .card{
+      background:var(--card); border:1px solid #212642; border-radius:16px; padding:16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .amt{font-size:24px;font-weight:700;margin:6px 0 2px}
+    .desc{color:var(--muted);font-size:13px;margin:0 0 12px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{
+      appearance:none; border:0; border-radius:999px; padding:10px 14px; font-weight:600; cursor:pointer;
+      text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      transition:transform .05s ease, box-shadow .15s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--brand);color:#062015; box-shadow:0 0 0 0 var(--ring)}
+    .btn-primary:hover{box-shadow:0 0 0 6px var(--ring)}
+    .btn-ghost{background:transparent;color:var(--fg);border:1px solid #2a3157}
+    .footer{
+      margin-top:26px;padding:16px;border-top:1px solid #222745;color:var(--muted);font-size:14px
+    }
+    .help a{color:var(--accent);text-decoration:none}
+    .help a:hover{text-decoration:underline}
+    /* Toast */
+    .toast{
+      position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+      background:#10162a;border:1px solid #243050;color:#d4e0ff;
+      padding:10px 14px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.35);
+      opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div style="
+        width:38px;
+        height:38px;
+        border-radius:10px;
+        background:url('https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Bolivia.svg') center/cover no-repeat;
+      "></div>
+        <div>
+          <h1>Apoya a la maestra</h1>
+          <!-- <div class="hint">Reemplaza los enlaces con tus links de Takenos en el bloque <b>CONFIG</b>.</div> -->
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" id="grid">
+        <!-- Las tarjetas se generan con JS según la configuración -->
+      </section>
+
+      <div class="footer">
+        <div class="help">
+          ¿Dudas o soporte? Escríbeme por WhatsApp:
+          <!-- Reemplaza el número por el tuyo -->
+          <a id="wa" href="https://wa.me/+59172274783?text=Hola%20quiero%20hacer%20un%20pago" target="_blank" rel="noopener">chatear ahora</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* =======================
+       CONFIG: edita aquí
+       - titulo: cómo se muestra el monto (ej. "Bs 50" o "$10")
+       - link:   pega tu link de Takenos para ese monto
+       ======================= */
+    const pagos = [
+      { titulo: "USD 10",  link: "https://app.takenos.com/pay/a53ba5fb-77c9-4e37-b473-266e21a6a6c7"  },
+      { titulo: "USD 30", link: "https://app.takenos.com/pay/7b36b1d4-0c01-4f51-a7c7-400e40fbb16b" },
+      { titulo: "USD 50", link: "https://app.takenos.com/pay/2cb30c8b-18b0-431e-8d02-fd7c20af4fcd" },
+     
+      // Puedes agregar más ítems:
+      // { titulo: "$10", link: "https://TU-LINK-TAKENOS/usd10" },
+    ];
+
+    // (Opcional) Mensaje precargado de WhatsApp
+    const whatsappConfig = {
+      number: "+59172274783", // Reemplaza por tu número
+      message: "Hola, quiero hacer un pago"
+    };
+    document.getElementById("wa").href =
+      `https://wa.me/+59172274783`;
+
+    /* =======================
+       Render dinámico de tarjetas
+       ======================= */
+    const grid = document.getElementById("grid");
+    pagos.forEach(({ titulo, link }) => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="amt">${titulo}</div>
+        <p class="desc">Pago rápido y seguro con Takenos.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="${link}" target="_blank" rel="noopener" aria-label="Pagar ${titulo} con Takenos">
+            Apoyar
+          </a>
+          <button class="btn btn-ghost copy-btn" data-link="${link}" aria-label="Copiar enlace de pago ${titulo}">
+            Copiar enlace
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    /* =======================
+       Copiar enlace al portapapeles
+       ======================= */
+    function showToast(msg){
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("¡Enlace copiado!");
+      }catch{
+        // Fallback para navegadores antiguos
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try{
+          document.execCommand("copy");
+          showToast("¡Enlace copiado!");
+        }catch{
+          showToast("No se pudo copiar");
+        }finally{
+          document.body.removeChild(ta);
+        }
+      }
+    }
+
+    document.addEventListener("click", (e)=>{
+      const btn = e.target.closest(".copy-btn");
+      if(!btn) return;
+      copyText(btn.dataset.link);
+    });
+  </script>
+</body>
+</html>
