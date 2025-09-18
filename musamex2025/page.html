@@ -66,19 +66,37 @@
   object-fit: cover;
 }
 
-.sponsors-slider .slides {
+.sponsor-slider {
+  width: 100%;
+  overflow: hidden;
   display: flex;
-  height: 100%;
-
-  
-  animation: slideX 42s steps(5) infinite;
-  will-change: transform;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
-.sponsors-slider .slide img {
-  max-width: 200px; /* ajusta según necesites */
-  height: auto;
+.sponsor-track {
+  display: flex;
+  gap: 40px;
+  animation: scrollSponsors 15s linear infinite;
+}
+
+.sponsor-slide img {
+  max-height: 150px;  /* adjust logo size */
+  width: auto;
   display: block;
+  filter: grayscale(20%); /* optional: softer look */
+  transition: transform 0.3s ease;
+}
+
+.sponsor-slide img:hover {
+  transform: scale(1.5);
+  filter: grayscale(0);
+}
+
+@keyframes scrollSponsors {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 
@@ -171,18 +189,22 @@
         <div class="card pad">
           <h2>Auspiciadores</h2>
       
-          <div class="hero-media card sponsors-slider">
-            <div class="slides">
-              <div class="slide">
+          <div class="sponsor-slider">
+            <div class="sponsor-track">
+              <div class="sponsor-slide">
                 <img src="./resources/sponsors/sponsor-img-1.png" alt="sponsor 1">
               </div>
-              <div class="slide">
+              <div class="sponsor-slide">
                 <img src="./resources/sponsors/sponsor-img-2.jpg" alt="sponsor 2">
               </div>
+              <!-- <div class="sponsor-slide">
+                <img src="./resources/sponsors/sponsor-img-3.png" alt="sponsor 3">
+              </div> -->
+              <!-- add more logos here -->
             </div>
           </div>
         </div>
-    </section>
+      </section>
 
     <section class="section">
       <div class="card pad">
