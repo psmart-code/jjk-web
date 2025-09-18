@@ -66,43 +66,84 @@
   object-fit: cover;
 }
 
-.sponsor-slider {
+/* -------- Mobile-first (teléfonos) -------- */
+:root{
+  --logo-h: clamp(46px, 18vw, 84px); /* altura logos en móvil */
+  --gap   : clamp(12px, 5vw, 24px);  /* separación en móvil  */
+  --dur   : 20s;                     /* velocidad del scroll */
+}
+
+.sponsor-slider{
   width: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 10px 0;
+  padding: 8px 0;
+  position: relative;
+  touch-action: pan-y; /* permite scroll vertical natural en móviles */
 }
 
-.sponsor-track {
+.sponsor-track{
   display: flex;
-  gap: 40px;
-  animation: scrollSponsors 15s linear infinite;
+  align-items: center;
+  gap: var(--gap);
+  animation: sponsorsMarquee var(--dur) linear infinite;
+  will-change: transform;
 }
 
-.sponsor-slide img {
-  max-height: 150px;  /* adjust logo size */
+/* Pausa al tocar en móviles y al hover en desktop */
+.sponsor-slider:active .sponsor-track,
+.sponsor-slider:hover .sponsor-track{
+  animation-play-state: paused;
+}
+
+.sponsor-slide{ flex: 0 0 auto; }
+
+.sponsor-slide img{
+  max-height: var(--logo-h);
   width: auto;
   display: block;
-  filter: grayscale(20%); /* optional: softer look */
-  transition: transform 0.3s ease;
+  object-fit: contain;
+  filter: grayscale(15%);
+  opacity: 0.98;
+  transition: transform .2s ease, filter .2s ease, opacity .2s ease;
 }
 
-.sponsor-slide img:hover {
-  transform: scale(1.5);
-  filter: grayscale(0);
+/* Zoom con dedo en móviles (y hover en desktop) */
+@media (hover: none){
+  .sponsor-slide img:active{ transform: scale(1.08); filter: grayscale(0); opacity: 1; }
+}
+@media (hover: hover){
+  .sponsor-slide img:hover{ transform: scale(1.5); filter: grayscale(0); opacity: 1; }
 }
 
-@keyframes scrollSponsors {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Loop continuo: duplica la lista en HTML */
+@keyframes sponsorsMarquee{
+  from{ transform: translateX(0); }
+  to  { transform: translateX(-50%); }
 }
 
+/* -------- Tablets -------- */
+@media (min-width: 600px){
+  :root{
+    --logo-h: clamp(56px, 14vw, 100px);
+    --gap   : clamp(16px, 4vw, 32px);
+    --dur   : 22s;
+  }
+}
 
-/* Mueve de 0% a -1300% (14 imágenes = 13 pasos de -100%) */
-@keyframes slideX{
-  to { transform: translateX(-1300%); }
+/* -------- Desktop -------- */
+@media (min-width: 992px){
+  :root{
+    --logo-h: clamp(64px, 10vw, 120px);
+    --gap   : clamp(20px, 3vw, 40px);
+    --dur   : 26s;
+  }
+}
+
+/* Accesibilidad: reduce animación si el usuario lo pide */
+@media (prefers-reduced-motion: reduce){
+  .sponsor-track{ animation: none; }
 }
   </style>
 </head>
@@ -189,18 +230,19 @@
         <div class="card pad">
           <h2>Auspiciadores</h2>
       
-          <div class="sponsor-slider">
+          <div class="sponsor-slider" aria-label="Logos de auspiciadores">
             <div class="sponsor-track">
-              <div class="sponsor-slide">
-                <img src="./resources/sponsors/sponsor-img-1.png" alt="sponsor 1">
-              </div>
-              <div class="sponsor-slide">
-                <img src="./resources/sponsors/sponsor-img-2.jpg" alt="sponsor 2">
-              </div>
-              <!-- <div class="sponsor-slide">
-                <img src="./resources/sponsors/sponsor-img-3.png" alt="sponsor 3">
-              </div> -->
-              <!-- add more logos here -->
+              <!-- LISTA ORIGINAL -->
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <!-- <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.png" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.png" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+       -->
+              <!-- DUPLICADA (loop perfecto) -->
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <!-- <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.png" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.png" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div> -->
             </div>
           </div>
         </div>
