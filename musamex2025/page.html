@@ -52,7 +52,7 @@
 .slides {
   display: flex;
   height: 100%;
-  animation: slideX 42s steps(13) infinite;
+  animation: slideX 42s steps(12) infinite;
   will-change: transform;
 }
 
@@ -65,12 +65,17 @@
   display: block;
   object-fit: cover;
 }
+@keyframes slideX{
+  /* Con 12 slides, el último índice es 11 */
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% * 12)); } /* (slides - 1) */
+}
 
 /* -------- Mobile-first (teléfonos) -------- */
 :root{
   --logo-h: clamp(46px, 18vw, 84px); /* altura logos en móvil */
   --gap   : clamp(12px, 5vw, 24px);  /* separación en móvil  */
-  --dur   : 20s;                     /* velocidad del scroll */
+  --dur   : 12s;                     /* velocidad del scroll */
 }
 
 .sponsor-slider{
@@ -169,7 +174,7 @@
     <section class="hero">
       <div class="card pad">
         <h1 class="title">Apoya a <span id="athleteName">Equipo Taekwondo Kangs Bolivia</span></h1>
-        <p class="subtitle">Nuestro equipo de taekwondo Kangs a sido seleccionado a competir en <strong>1er COPA WORLD MUSA MEXICO</strong>, representando a Bolivia, a realizarce en Queretaro, Mexico el fecha 22 de Noviembre del 2025, el evento es organizado y avalado por <strong>World MUSA Taekwondo Mexico / WMT-Mexico.</strong> Tu apoyo permitirá cubrir pasajes, hospedaje y alimentación de nuestra seleccion.</p>
+        <p class="subtitle">Nuestro equipo de taekwondo Kangs a cargo de la Maestra <strong> Jin Joo Kang Lee (Presidenta Nacional de World Musa)</strong>  a sido seleccionado a competir en <strong>1er COPA WORLD MUSA MEXICO</strong>, representando a Bolivia, a realizarce en Queretaro, Mexico el fecha 22 de Noviembre del 2025, el evento es organizado y avalado por <strong>World MUSA Taekwondo Mexico / WMT-Mexico.</strong> Tu apoyo permitirá cubrir pasajes, hospedaje y alimentación de nuestra seleccion.</p>
         <div class="cta" role="group" aria-label="Acciones de donación">
           <a id="donateBtn" class="btn btn-brand" href="#" target="_blank" rel="noopener">Apoyar ahora</a>
           <button class="btn btn-ghost" id="copyLinkBtn">Copiar link</button>
@@ -197,6 +202,7 @@
           <div class="slide"><img src="./resources/musa-mex-2025-img-12.jpg" alt="Maestra 12"></div>
           <div class="slide"><img src="./resources/musa-mex-2025-img-13.jpg" alt="Maestra 13"></div>
           <div class="slide"><img src="./resources/musa-mex-2025-img-14.jpg" alt="Maestra 14"></div>
+          <div class="slide"><img src="./resources/musa-mex-2025-img-1.jpg" alt="Maestra 1"></div>
 
         </div>
       </div>
