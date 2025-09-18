@@ -137,28 +137,6 @@
   }
 }
 
-/* Solo en móviles, reemplaza auto-scroll por swipe */
-@media (max-width: 600px){
-  .sponsor-slider{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-  }
-  .sponsor-track{
-    animation: none;          /* sin auto-scroll en móvil */
-    gap: 16px;
-  }
-  .sponsor-slide{
-    scroll-snap-align: center;
-    flex: 0 0 auto;
-    /* ancho mínimo para que “enganche” bien al deslizar */
-    min-width: 65vw;          /* ajusta 60–80vw a tu gusto */
-    display: flex;
-    justify-content: center;
-  }
-}
-
 /* -------- Desktop -------- */
 @media (min-width: 992px){
   :root{
