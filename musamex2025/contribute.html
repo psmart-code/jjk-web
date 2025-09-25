@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Apoyo QR</title>
   <meta name="description" content="montos sugeridos" />
+  <script 
+  src="https://www.paypal.com/sdk/js?client-id=BAAj5-Fh7n32xz5XB871dzptPHRw0OH2kXdr34uQiFFRk3ffBayf90F8i5xH1WWo5wxewtuiaKlr90mnis&components=hosted-buttons&disable-funding=venmo&currency=USD">
+</script>
   <style>
     :root{
       --bg:#0f1226; --bg2:#12163a; --card:#161a32; --fg:#e6eaf2; --muted:#9aa4c2; --brand:#6ee7b7; --accent:#7dd3fc;
@@ -75,6 +78,8 @@
     }
     .help a{color:var(--accent);text-decoration:none}
     .help a:hover{text-decoration:underline}
+
+
   </style>
 </head>
 <body>
@@ -105,15 +110,18 @@
       </section>
       <p>Si desea apoyar con otro monto de los sugeridos por favor ponerse en contacto.</p>
 
-      <div class="footer">
-        <div class="help">
-          ¿Dudas o soporte? Escríbeme por WhatsApp:
-          <a id="wa" href="https://wa.me/+59172274783?text=Hola%20quiero%20hacer%20un%20pago" target="_blank" rel="noopener">chatear ahora</a>
-        </div>
-      </div>
-    </main>
-  </div>
-
+      <!-- Sección PayPal -->
+      <h2 class="section-title" style="margin-top:20px;">Apoyo con PayPal</h2>
+      <p class="section-sub">Haz tu donación de forma segura con PayPal.</p>
+      
+      <style>.pp-77EZSTCCFE6FA{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
+      <form action="https://www.paypal.com/ncp/payment/77EZSTCCFE6FA" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+        <input class="pp-77EZSTCCFE6FA" type="submit" value="Donar" />
+        <img src=https://www.paypalobjects.com/images/Debit_Credit.svg alt="cards" />
+        <section style="font-size: 0.75rem;"> Con la tecnología de <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+      </form>
+      
+     
   <script>
     /* =======================
        CONFIG: QRs
