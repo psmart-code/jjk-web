@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Editor de Takenos Links</title>
+  <style>
+    :root{--bg:#0f1226;--card:#161a32;--fg:#e6eaf2;--muted:#9aa4c2;--ring:rgba(110,231,183,.35);}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1226;color:var(--fg)}
+    .wrap{max-width:960px;margin:auto;padding:24px}
+    h1{margin:0 0 16px;font-size:22px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    input[type="text"], input[type="url"], textarea{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #223052;background:#0f1430;color:var(--fg)
+    }
+    .card{background:var(--card);border:1px solid #223052;border-radius:14px;padding:16px;margin:12px 0}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid #223052;background:linear-gradient(180deg,#1b2244,#151a32);color:#eaf0ff;text-decoration:none;font-weight:600;cursor:pointer}
+    .btn:hover{transform:translateY(-1px);border-color:#2b3b66;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:10px;border-bottom:1px solid #223052;vertical-align:top}
+    small{color:var(--muted)}
+    .tag{display:inline-block;padding:2px 8px;border:1px solid #2b3b66;border-radius:999px;font-size:12px;color:#cfe6ff}
+    .right{margin-left:auto}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    .danger{border-color:#5a2330;background:linear-gradient(180deg,#3a1220,#2a0f1c)}
+    .success{border-color:#1f5a3a;background:linear-gradient(180deg,#1b3a2a,#162a20)}
+    .ghost{background:transparent}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
+    pre{white-space:pre-wrap;background:#0b0f25;border:1px solid #223052;border-radius:12px;padding:12px;max-height:260px;overflow:auto}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Editor de <span class="tag">takenosLinks.json</span></h1>
+
+    <div class="card">
+      <div class="row">
+        <input id="loadUrl" type="url" placeholder="URL del JSON (ej: https://psmart-code.github.io/jjk-web/musamex2025/data/takenosLinks.json)" />
+        <button class="btn" id="btnLoad">Cargar de URL</button>
+        <button class="btn ghost" id="btnLoadLocal">Cargar LocalStorage</button>
+        <div class="right"></div>
+        <button class="btn success right" id="btnExport">Exportar JSON</button>
+        <button class="btn ghost" id="btnCopy">Copiar JSON</button>
+        <button class="btn" id="btnSaveLocal">Guardar en LocalStorage</button>
+        <button class="btn danger" id="btnClearLocal">Borrar LocalStorage</button>
+      </div>
+      <small>Tip: usa “Exportar JSON” y sube el archivo al repo en <code>musamex2025/data/takenosLinks.json</code>.</small>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Agregar/editar link</h3>
+      <div class="grid">
+        <div>
+          <label>Label / Texto del botón</label>
+          <input id="inpLabel" type="text" placeholder="Ej: Apoyar con $5" />
+        </div>
+        <div>
+          <label>URL de Takenos (requerida)</label>
+          <input id="inpUrl" type="url" placeholder="https://pay.takenos.xyz/xxxxx" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div style="flex:1">
+          <label>Nota (opcional)</label>
+          <input id="inpNote" type="text" placeholder="USDT / Tarjeta / Región, etc." />
+        </div>
+        <button class="btn right" id="btnAdd">Agregar a la lista</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="controls" style="margin-bottom:8px">
+        <span class="tag">Lista de links</span>
+        <div class="right"></div>
+        <button class="btn ghost" id="btnClear">Vaciar lista</button>
+      </div>
+      <table id="tbl">
+        <thead>
+          <tr><th>#</th><th>Label</th><th>URL</th><th>Nota</th><th>Acciones</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="controls"><span class="tag">Vista previa JSON</span></div>
+      <pre id="preview">[]</pre>
+    </div>
+  </div>
+
+  <script>
+    const $ = (s)=>document.querySelector(s);
+    const state = { items: [] };
+    const LS_KEY = "takenosLinks";
+
+    function normalizeItem(o){
+      // Permite objetos con campos extra; garantiza label/url/note
+      return {
+        label: (o.label ?? "").toString().trim(),
+        url: (o.url ?? "").toString().trim(),
+        note: (o.note ?? "").toString().trim()
+      };
+    }
+
+    function render(){
+      const tbody = $("#tbl tbody");
+      tbody.innerHTML = "";
+      state.items.forEach((it, idx)=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="width:40px">${idx+1}</td>
+          <td>${escapeHtml(it.label||"")}</td>
+          <td><a href="${escapeAttr(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.url)}</a></td>
+          <td>${escapeHtml(it.note||"")}</td>
+          <td style="white-space:nowrap">
+            <button class="btn ghost" data-act="up" data-idx="${idx}">↑</button>
+            <button class="btn ghost" data-act="down" data-idx="${idx}">↓</button>
+            <button class="btn" data-act="edit" data-idx="${idx}">Editar</button>
+            <button class="btn danger" data-act="del" data-idx="${idx}">Eliminar</button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+      $("#preview").textContent = JSON.stringify(state.items, null, 2);
+    }
+
+    function escapeHtml(s){ return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function escapeAttr(s){ return s.replace(/"/g, '&quot;'); }
+
+    function addItem(item){
+      const it = normalizeItem(item);
+      if(!it.url){ alert("La URL es requerida."); return; }
+      if(!it.label) it.label = "Apoyar";
+      state.items.push(it);
+      render();
+    }
+
+    function editItem(idx){
+      const it = state.items[idx];
+      $("#inpLabel").value = it.label || "";
+      $("#inpUrl").value = it.url || "";
+      $("#inpNote").value = it.note || "";
+      // Reemplaza en el mismo índice al volver a “Agregar”
+      state.items.splice(idx,1);
+      render();
+    }
+
+    function move(idx, dir){
+      const j = idx + dir;
+      if(j<0 || j>=state.items.length) return;
+      const tmp = state.items[idx];
+      state.items[idx] = state.items[j];
+      state.items[j] = tmp;
+      render();
+    }
+
+    // Eventos UI
+    $("#btnAdd").addEventListener("click", ()=>{
+      addItem({
+        label: $("#inpLabel").value,
+        url: $("#inpUrl").value,
+        note: $("#inpNote").value
+      });
+      $("#inpLabel").value = "";
+      $("#inpUrl").value = "";
+      $("#inpNote").value = "";
+    });
+
+    $("#tbl").addEventListener("click", (e)=>{
+      const btn = e.target.closest("button"); if(!btn) return;
+      const idx = +btn.dataset.idx;
+      const act = btn.dataset.act;
+      if(act==="del"){ state.items.splice(idx,1); render(); }
+      if(act==="edit"){ editItem(idx); }
+      if(act==="up"){ move(idx,-1); }
+      if(act==="down"){ move(idx,1); }
+    });
+
+    $("#btnClear").addEventListener("click", ()=>{
+      if(confirm("¿Vaciar toda la lista?")){ state.items = []; render(); }
+    });
+
+    $("#btnSaveLocal").addEventListener("click", ()=>{
+      localStorage.setItem(LS_KEY, JSON.stringify(state.items));
+      alert("Guardado en LocalStorage.");
+    });
+
+    $("#btnLoadLocal").addEventListener("click", ()=>{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw){ alert("No hay datos en LocalStorage."); return; }
+      try{
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) throw new Error("JSON no es un array.");
+        state.items = arr.map(normalizeItem);
+        render();
+      }catch(err){ alert("Error al cargar: "+err.message); }
+    });
+
+    $("#btnClearLocal").addEventListener("click", ()=>{
+      localStorage.removeItem(LS_KEY);
+      alert("LocalStorage limpiado.");
+    });
+
+    $("#btnLoad").addEventListener("click", async ()=>{
+      const url = $("#loadUrl").value.trim();
+      if(!url) return alert("Ingresa una URL.");
+      try{
+        const res = await fetch(url, { cache:"no-store" });
+        if(!res.ok) throw new Error(res.status+" "+res.statusText);
+        const data = await res.json();
+        if(!Array.isArray(data)) throw new Error("El JSON no es un array.");
+        state.items = data.map(normalizeItem);
+        render();
+      }catch(err){
+        alert("Error cargando JSON: "+err.message);
+      }
+    });
+
+    $("#btnExport").addEventListener("click", ()=>{
+      const blob = new Blob([JSON.stringify(state.items,null,2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "takenosLinks.json";
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    $("#btnCopy").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(JSON.stringify(state.items,null,2));
+        alert("JSON copiado al portapapeles.");
+      }catch{ alert("No se pudo copiar."); }
+    });
+
+    // Seed opcional al abrir
+    state.items = [];
+    render();
+  </script>
+</body>
+</html>
