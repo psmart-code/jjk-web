@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apoyo a equipo Kangs Bolivia</title>
+  <!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:title" content="Apoya al equipo de taekwondo Kangs Bolivia" />
+<meta property="og:description" content="Apoya a nuestro equipo de taekwondo. Tu ayuda hará posible su viaje." />
+<meta property="og:image" content="https://psmart-code.github.io/jjk-web/musamex2025/resources/musa-mex-2025-img-1.jpg" />
+<meta property="og:url" content="https://psmart-code.github.io/jjk-web/musamex2025/page.html" />
+<meta property="og:type" content="website" />
+  <meta name="description" content="Apoya con un clic o escanea el QR para apoyar a la maestra." />
+  <style>
+    :root{--bg:#0f1226;--fg:#fff;--muted:#cbd5e1;--brand:#6ee7b7;--card:#171a35}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:linear-gradient(180deg,#0b0e20 0%, #12153a 60%, #0f1226 100%);color:var(--fg)}
+    .wrap{max-width:920px;margin:auto;padding:20px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    .badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.15);border-radius:18px}
+    .pad{padding:18px}
+    .title{font-size:clamp(26px,3.2vw,40px);font-weight:800;line-height:1.1;margin:8px 0 6px}
+    .subtitle{color:var(--muted);margin:0 0 12px}
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .hero-media{border-radius:18px;overflow:hidden;min-height:260px}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:12px;padding:14px 18px;font-weight:700}
+    .btn-brand{background:linear-gradient(180deg,var(--brand),#34d399);color:#0b1220}
+    .btn-ghost{background:rgba(255,255,255,.08);color:var(--fg);border:1px solid rgba(255,255,255,.15)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .qrbox{display:grid;place-items:center;padding:18px}
+    .qrbox img{max-width:320px;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:#fff}
+    .section{margin:26px 0}
+    .list{display:grid;gap:10px}
+    .item{padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+    footer{color:var(--muted);padding:20px 0;border-top:1px solid rgba(255,255,255,.12);margin-top:26px}
+    @media (max-width: 880px){.hero{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+
+    /* Contenedor fijo */
+.slider {
+  width: 100%;
+  max-width: 600px;
+  height: 510px;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Slides en fila */
+.slides {
+  display: flex;
+  height: 100%;
+  animation: slideX 12s  infinite;
+  will-change: transform;
+}
+
+/* Cada slide ocupa exactamente el ancho del contenedor */
+.slide{ flex:0 0 100%; height:100%; }
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+@keyframes slideX {
+  0%, 30% {
+    transform: translateX(0);
+  }
+  33%, 63% {
+    transform: translateX(-100%);
+  }
+  66%, 96% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* -------- Mobile-first (teléfonos) -------- */
+:root{
+  --logo-h: clamp(46px, 18vw, 84px); /* altura logos en móvil */
+  --gap   : clamp(12px, 5vw, 24px);  /* separación en móvil  */
+  --dur   : 3s;                     /* velocidad del scroll */
+}
+
+.sponsor-slider{
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  position: relative;
+  touch-action: pan-y; /* permite scroll vertical natural en móviles */
+}
+
+.sponsor-track{
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  animation: sponsorsMarquee var(--dur) linear infinite;
+  will-change: transform;
+}
+
+/* Pausa al tocar en móviles y al hover en desktop */
+.sponsor-slider:active .sponsor-track,
+.sponsor-slider:hover .sponsor-track{
+  animation-play-state: paused;
+}
+
+.sponsor-slide{ flex: 0 0 auto; }
+
+.sponsor-slide img{
+  max-height: var(--logo-h);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: grayscale(15%);
+  opacity: 0.98;
+  transition: transform .2s ease, filter .2s ease, opacity .2s ease;
+}
+
+/* Zoom con dedo en móviles (y hover en desktop) */
+@media (hover: none){
+  .sponsor-slide img:active{ transform: scale(1.08); filter: grayscale(0); opacity: 1; }
+}
+@media (hover: hover){
+  .sponsor-slide img:hover{ transform: scale(1.5); filter: grayscale(0); opacity: 1; }
+}
+
+/* Loop continuo: duplica la lista en HTML */
+@keyframes sponsorsMarquee{
+  from{ transform: translateX(0); }
+  to  { transform: translateX(-50%); }
+}
+
+/* -------- Tablets -------- */
+@media (min-width: 600px){
+  :root{
+    --logo-h: clamp(56px, 14vw, 100px);
+    --gap   : clamp(16px, 4vw, 32px);
+    --dur   : 22s;
+  }
+}
+
+/* -------- Desktop -------- */
+@media (min-width: 992px){
+  :root{
+    --logo-h: clamp(64px, 10vw, 120px);
+    --gap   : clamp(20px, 3vw, 40px);
+    --dur   : 26s;
+  }
+}
+
+/* Accesibilidad: reduce animación si el usuario lo pide */
+@media (prefers-reduced-motion: reduce){
+  .sponsor-track{ animation: none; }
+}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Bolivia.svg') center/cover no-repeat;
+"></div>
+        <div>
+          <div style="font-weight:800;letter-spacing:.3px">Apoyo Deportivo</div>
+          <div class="badge">Transparente • Seguro</div>
+        </div>
+      </div>
+      <!-- <div class="badge">Hecho con ❤️</div> -->
+    </header>
+
+
+    <section class="hero">
+      <div class="card pad">
+        <h1 class="title">Apoya al <span id="athleteName">Equipo Taekwondo Kangs Bolivia</span></h1>
+        <p class="subtitle">Nuestro equipo de taekwondo Kangs a cargo de la Maestra <strong> Jin Joo Kang Lee (Presidenta Nacional de World Musa)</strong>  a sido seleccionado a competir en el <strong>3er OPEN SUDAMERICANO 2026</strong>, representando a Bolivia, a realizarce en Buenos Aires, Argentina en fecha 8 - 9 de Agosto del 2026, el evento es organizado y avalado por <strong>World MUSA Taekwondo Argentina / WMT-Argentina.</strong> Tu apoyo permitirá cubrir pasajes, hospedaje y alimentación de nuestra seleccion.</p>
+        <div class="cta" role="group" aria-label="Acciones de donación">
+          <a id="donateBtn" class="btn btn-brand" href="#" target="_blank" rel="noopener">Apoyar ahora</a>
+          <button class="btn btn-ghost" id="copyLinkBtn">Copiar link</button>
+          <button class="btn btn-ghost" id="shareBtn">Compartir</button>
+          <button class="btn btn-ghost" id="whatsAppBtn">WhatsApp</button>
+        </div>
+      </div>
+      <!-- <div class="hero-media card">
+        <img src="./resources/musa-mex-2025-img-1.jpg" alt="Maestra de artes marciales" />
+      </div> -->
+
+      <div class="hero-media card slider">
+        <div class="slides">
+          <div class="slide"><img src="./resources/open-arg-img-1.jpg" alt="master 1"></div>
+          <div class="slide"><img src="./resources/open-arg-img-2.jpg" alt="master 2"></div>
+          <div class="slide"><img src="./resources/open-arg-img-3.jpg" alt="master 3"></div>
+
+         
+
+        </div>
+      </div>
+    </section>
+    <!-- <section class="section">
+      <div class="card pad">
+        <h2>Sobre la maestra</h2>
+        <p id="story">Nuestra atleta ha sido nominada al prestigioso <strong>2025 Greatest of All Time (GOAT) Award</strong>, otorgado por el Comité de Williams Elite Martial Arts Academy en Florida, EE.UU. Este reconocimiento internacional destaca su excepcional habilidad, dedicación e impacto en la comunidad de artes marciales.  
+        Esta nominación representa un honor único y la oportunidad de dejar huella en la historia de las artes marciales. Tu apoyo permitirá cubrir pasajes, inscripción, hospedaje y alimentación para asistir a la ceremonia y al evento internacional.</p>
+      </div>
+    </section> -->
+
+    <section class="section two">
+      <div class="card pad">
+        <h2>Cómo Apoyar</h2>
+        <div class="list">
+          <div class="item">Pulsa <strong>Apoyar ahora</strong> o escanea el QR con la app de tu banco en Bolivia.</div>
+          <div class="item">Elige el monto y confirma el pago.</div>
+        </div>
+        <p class="subtitle">Funciona con cualquier banco de Bolivia</p>
+      </div>
+      <div class="card qrbox">
+        <div>
+          <div class="badge" style="margin-bottom:8px">Escanéame para apoyar</div>
+          <img id="qrImg" alt="Código QR de donación" src="./resources/open-arg-2026-qr.jpg" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+        <div class="card pad">
+          <h2>Auspiciadores</h2>
+      
+          <div class="sponsor-slider" aria-label="Logos de auspiciadores">
+            <div class="sponsor-track">
+              <!-- LISTA ORIGINAL -->
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <!-- <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.png" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.png" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+       -->
+              <!-- DUPLICADA (loop perfecto) -->
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <!-- <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.png" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
+              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.png" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div> -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <section class="section">
+      <div class="card pad">
+        <h2>Actualizaciones</h2>
+        <div class="list" id="updates">
+          <div class="item"><strong>30/03/2026</strong> Lanzamos la campaña. ¡Gracias por compartir!</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Campaña de apoyo deportivo.</div>
+    </footer>
+  </div>
+
+  <script>
+    // === CONFIGURA AQUÍ TU CAMPAÑA (simple) ===
+    const campaign = {
+      paymentLink: "https://psmart-code.github.io/jjk-web/openarg2026/contribute.html", // ⇦ Reemplaza por tu link
+      urlSite: "https://psmart-code.github.io/jjk-web/openarg2026/page.html", 
+      athleteName: "Equipo Taekwondo Kangs Bolivia"
+    };
+
+    const $ = s => document.querySelector(s);
+    $('#athleteName').textContent = campaign.athleteName;
+    $('#year').textContent = new Date().getFullYear();
+
+    // Botón principal
+    const setDonateHref = (href) => { $('#donateBtn').href = href; };
+    setDonateHref(campaign.paymentLink);
+
+    // QR dinámico (con fallback)
+    (function buildQR(){
+      const img = document.getElementById('qrImg');
+      const data = encodeURIComponent(campaign.paymentLink);
+      img.src = `./resources/open-arg-2026-qr.jpg`;
+      img.addEventListener('error', ()=>{
+        img.src = `https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=${data}`;
+      }, {once:true});
+    })();
+
+    // Copiar/Compartir/WhatsApp
+    document.getElementById('copyLinkBtn').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(campaign.urlSite); alert('Link copiado ✅'); }
+      catch{ prompt('Copia el link manualmente:', campaign.urlSite); }
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async ()=>{
+      const shareData = { title: 'Apoya esta campaña', text: 'Súmate con un aporte', url: campaign.urlSite };
+      if (navigator.share){ try{ await navigator.share(shareData); } catch{} }
+      else { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(campaign.urlSite)}`, '_blank'); }
+    });
+
+    document.getElementById('whatsAppBtn').addEventListener('click', ()=>{
+      const m = `¡Hola! Apoya esta campaña deportiva 💪
+Dona aquí: ${campaign.paymentLink}`;
+      window.open(`https://wa.me/+59172274783`, '_blank');
+    });
+  </script>
+</body>
+</html>
