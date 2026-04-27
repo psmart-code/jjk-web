@@ -1,5 +1,21 @@
 [
   {
+    "src": "./resources/sponsors/sponsor-img-1.png",
+    "alt": "Sponsor 1"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-2.jpg",
+    "alt": "Sponsor 2"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-3.JPG",
+    "alt": "Sponsor 3"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-4.JPG",
+    "alt": "Sponsor 4"
+  },
+  {
     "src": "./resources/sponsors/sponsor-img-5.JPG",
     "alt": "Sponsor 5"
   },
