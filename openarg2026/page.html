@@ -303,50 +303,55 @@ Dona aquí: ${campaign.paymentLink}`;
       window.open(`https://wa.me/+59172274783`, '_blank');
     });
 
-    // Sponsors dinámicos: carga automáticamente sponsor-img-N.ext que existan
+    // Sponsors dinámicos y rápidos desde JSON
     (async function buildSponsors(){
       const track = document.getElementById('sponsorTrack');
       if (!track) return;
 
-      const maxSponsors = 15;
-      const extensions = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp', 'WebP'];
       const imageSizes = '(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw';
+      const fallbackSponsors = [
+        { src: './resources/sponsors/sponsor-img-5.JPG', alt: 'Sponsor 5' },
+        { src: './resources/sponsors/sponsor-img-6.jpg', alt: 'Sponsor 6' },
+        { src: './resources/sponsors/sponsor-img-7.JPG', alt: 'Sponsor 7' },
+        { src: './resources/sponsors/sponsor-img-8.JPG', alt: 'Sponsor 8' },
+        { src: './resources/sponsors/sponsor-img-9.JPG', alt: 'Sponsor 9' },
+        { src: './resources/sponsors/sponsor-img-10.JPG', alt: 'Sponsor 10' },
+        { src: './resources/sponsors/sponsor-img-11.jpg', alt: 'Sponsor 11' }
+      ];
 
-      const fileExists = (src) => new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = src;
-      });
-
-      const findSponsorByIndex = async (i) => {
-        for (const ext of extensions){
-          const src = `./resources/sponsors/sponsor-img-${i}.${ext}`;
-          if (await fileExists(src)){
-            return { src, index: i };
-          }
-        }
-        return null;
+      const loadSponsorsFromJson = async () => {
+        const response = await fetch('./resources/sponsors/sponsors.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`No se pudo cargar sponsors.json (${response.status})`);
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error('Formato inválido de sponsors.json');
+        return data
+          .filter((item) => item && typeof item.src === 'string' && item.src.trim() !== '')
+          .map((item, index) => ({
+            src: item.src,
+            alt: (typeof item.alt === 'string' && item.alt.trim()) || `Sponsor ${index + 1}`
+          }));
       };
 
-      const checks = [];
-      for (let i = 1; i <= maxSponsors; i += 1){
-        checks.push(findSponsorByIndex(i));
+      let sponsors = [];
+      try {
+        sponsors = await loadSponsorsFromJson();
+      } catch (error) {
+        console.warn('Usando sponsors por fallback:', error);
+        sponsors = fallbackSponsors;
       }
-      const sponsors = (await Promise.all(checks)).filter(Boolean);
 
       if (!sponsors.length){
         track.innerHTML = '<div class="item">No hay auspiciadores cargados todavía.</div>';
         return;
       }
 
-      const createSlide = ({ src, index }) => {
+      const createSlide = ({ src, alt }) => {
         const slide = document.createElement('div');
         slide.className = 'sponsor-slide';
 
         const img = document.createElement('img');
         img.src = src;
-        img.alt = `Sponsor ${index}`;
+        img.alt = alt;
         img.loading = 'eager';
         img.decoding = 'async';
         img.sizes = imageSizes;

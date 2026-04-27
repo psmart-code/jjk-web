@@ -1,0 +1,30 @@
+[
+  {
+    "src": "./resources/sponsors/sponsor-img-5.JPG",
+    "alt": "Sponsor 5"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-6.jpg",
+    "alt": "Sponsor 6"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-7.JPG",
+    "alt": "Sponsor 7"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-8.JPG",
+    "alt": "Sponsor 8"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-9.JPG",
+    "alt": "Sponsor 9"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-10.JPG",
+    "alt": "Sponsor 10"
+  },
+  {
+    "src": "./resources/sponsors/sponsor-img-11.jpg",
+    "alt": "Sponsor 11"
+  }
+]
