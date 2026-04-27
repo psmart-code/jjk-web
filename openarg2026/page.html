@@ -307,6 +307,7 @@ Dona aquí: ${campaign.paymentLink}`;
     (async function buildSponsors(){
       const track = document.getElementById('sponsorTrack');
       if (!track) return;
+      const slider = track.closest('.sponsor-slider');
 
       const imageSizes = '(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw';
       const fallbackSponsors = [
@@ -365,6 +366,29 @@ Dona aquí: ${campaign.paymentLink}`;
       sponsors.forEach((sponsor) => fragment.appendChild(createSlide(sponsor))); // duplicado para loop continuo
       track.innerHTML = '';
       track.appendChild(fragment);
+
+      // Safari/Chrome mobile a veces no inicia la animación hasta una repintada.
+      // Forzamos reinicio del keyframe al montar y al volver la pestaña.
+      const restartMarquee = () => {
+        track.style.animation = 'none';
+        // Fuerza reflow para asegurar que el navegador aplique el reset.
+        void track.offsetWidth;
+        track.style.animation = '';
+        track.style.animationPlayState = 'running';
+      };
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(restartMarquee);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) restartMarquee();
+      });
+
+      window.addEventListener('pageshow', restartMarquee);
+      if (slider) {
+        slider.addEventListener('touchend', restartMarquee, { passive: true });
+      }
     })();
   </script>
 </body>
