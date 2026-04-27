@@ -239,37 +239,7 @@
           <h2>Auspiciadores</h2>
       
           <div class="sponsor-slider" aria-label="Logos de auspiciadores">
-            <div class="sponsor-track">
-              <!-- LISTA ORIGINAL -->
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.JPG" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.JPG" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-5.JPG" alt="Sponsor 5" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-6.jpg" alt="Sponsor 6" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-7.JPG" alt="Sponsor 7" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-8.JPG" alt="Sponsor 8" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-9.JPG" alt="Sponsor 9" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-10.JPG" alt="Sponsor 10" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-
-      
-              <!-- DUPLICADA (loop perfecto) -->
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-1.png" alt="Sponsor 1" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-2.jpg"  alt="Sponsor 2" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.JPG" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.JPG" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-5.JPG" alt="Sponsor 5" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-6.JPG" alt="Sponsor 6" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-7.JPG" alt="Sponsor 7" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-8.JPG" alt="Sponsor 8" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-9.JPG" alt="Sponsor 9" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-10.JPG" alt="Sponsor 10" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-
-              <!-- <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-3.png" alt="Sponsor 3" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div>
-              <div class="sponsor-slide"><img src="./resources/sponsors/sponsor-img-4.png" alt="Sponsor 4" loading="lazy" decoding="async" sizes="(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw"></div> -->
-            </div>
+            <div class="sponsor-track" id="sponsorTrack"></div>
           </div>
         </div>
       </section>
@@ -331,6 +301,60 @@
 Dona aquí: ${campaign.paymentLink}`;
       window.open(`https://wa.me/+59172274783`, '_blank');
     });
+
+    // Sponsors dinámicos: carga automáticamente sponsor-img-N.ext que existan
+    (async function buildSponsors(){
+      const track = document.getElementById('sponsorTrack');
+      if (!track) return;
+
+      const maxSponsors = 30;
+      const extensions = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp', 'WebP'];
+      const imageSizes = '(max-width:480px) 45vw, (max-width:768px) 28vw, 18vw';
+
+      const fileExists = (src) => new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
+      });
+
+      const sponsors = [];
+      for (let i = 1; i <= maxSponsors; i += 1){
+        for (const ext of extensions){
+          const src = `./resources/sponsors/sponsor-img-${i}.${ext}`;
+          if (await fileExists(src)){
+            sponsors.push({ src, index: i });
+            break;
+          }
+        }
+      }
+
+      if (!sponsors.length){
+        track.innerHTML = '<div class="item">No hay auspiciadores cargados todavía.</div>';
+        return;
+      }
+
+      const createSlide = ({ src, index }) => {
+        const slide = document.createElement('div');
+        slide.className = 'sponsor-slide';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Sponsor ${index}`;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.sizes = imageSizes;
+
+        slide.appendChild(img);
+        return slide;
+      };
+
+      const fragment = document.createDocumentFragment();
+      sponsors.forEach((sponsor) => fragment.appendChild(createSlide(sponsor)));
+      sponsors.forEach((sponsor) => fragment.appendChild(createSlide(sponsor))); // duplicado para loop continuo
+      track.innerHTML = '';
+      track.appendChild(fragment);
+    })();
   </script>
 </body>
 </html>
